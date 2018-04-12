@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.system.po.Userlogin" >
     <id column="userID" property="userid" jdbcType="INTEGER" />
     <result column="userName" property="username" jdbcType="VARCHAR" />
+    <result column="realName" property="realname" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="role" property="role" jdbcType="INTEGER" />
   </resultMap>
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    userID, userName, password, role
+    userID, userName,realName, password, role
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.system.po.UserloginExample" >
     select
@@ -99,9 +100,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.system.po.Userlogin" >
-    insert into userlogin (userID, userName, password, 
+    insert into userlogin (userID, userName,realName, password,
       role)
-    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{role,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.system.po.Userlogin" >
@@ -112,6 +113,9 @@
       </if>
       <if test="username != null" >
         userName,
+      </if>
+      <if test="realname != null" >
+        realName,
       </if>
       <if test="password != null" >
         password,
@@ -126,6 +130,9 @@
       </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
       </if>
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
@@ -150,6 +157,9 @@
       <if test="record.username != null" >
         userName = #{record.username,jdbcType=VARCHAR},
       </if>
+      <if test="record.realname != null" >
+        realName = #{record.realname,jdbcType=VARCHAR},
+      </if>
       <if test="record.password != null" >
         password = #{record.password,jdbcType=VARCHAR},
       </if>
@@ -165,6 +175,7 @@
     update userlogin
     set userID = #{record.userid,jdbcType=INTEGER},
       userName = #{record.username,jdbcType=VARCHAR},
+      realName = #{record.realname,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       role = #{record.role,jdbcType=INTEGER}
     <if test="_parameter != null" >
@@ -176,6 +187,9 @@
     <set >
       <if test="username != null" >
         userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        realName = #{realname,jdbcType=VARCHAR},
       </if>
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
@@ -189,6 +203,7 @@
   <update id="updateByPrimaryKey" parameterType="com.system.po.Userlogin" >
     update userlogin
     set userName = #{username,jdbcType=VARCHAR},
+      realName = #{realname,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       role = #{role,jdbcType=INTEGER}
     where userID = #{userid,jdbcType=INTEGER}

@@ -5,6 +5,7 @@ import com.system.po.Role;
 import com.system.po.Userlogin;
 import com.system.service.RoleService;
 import com.system.service.UserloginService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -84,8 +85,8 @@ public class LoginRealm extends AuthorizingRealm{
         }
 
         //身份验证通过,返回一个身份信息
-        AuthenticationInfo aInfo = new SimpleAuthenticationInfo(username,password,userlogin.getPassword());
-
+        AuthenticationInfo aInfo = new SimpleAuthenticationInfo(username,password,getName());
+        SecurityUtils.getSubject().getSession().setAttribute("user",userlogin);
         return aInfo;
     }
 }

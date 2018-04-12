@@ -5,6 +5,8 @@ public class Userlogin {
 
     private String username;
 
+    private String realname;
+
     private String password;
 
     private Integer role;
@@ -23,6 +25,14 @@ public class Userlogin {
 
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
     }
 
     public String getPassword() {

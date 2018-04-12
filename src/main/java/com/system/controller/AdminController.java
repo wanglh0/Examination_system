@@ -86,6 +86,7 @@ public class AdminController {
         //添加成功后，也添加到登录表
         Userlogin userlogin = new Userlogin();
         userlogin.setUsername(studentCustom.getUserid().toString());
+        userlogin.setRealname(studentCustom.getUsername());
         userlogin.setPassword("123");
         userlogin.setRole(2);
         userloginService.save(userlogin);
@@ -197,6 +198,7 @@ public class AdminController {
         //添加成功后，也添加到登录表
         Userlogin userlogin = new Userlogin();
         userlogin.setUsername(teacherCustom.getUserid().toString());
+        userlogin.setRealname(teacherCustom.getUsername());
         userlogin.setPassword("123");
         userlogin.setRole(1);
         userloginService.save(userlogin);
