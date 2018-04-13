@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CustomExceptionResolver implements HandlerExceptionResolver {
 
+    @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
 
         ModelAndView modelAndView = new ModelAndView();
@@ -28,12 +29,12 @@ public class CustomExceptionResolver implements HandlerExceptionResolver {
         } else if (e instanceof UnknownAccountException) {
             //用户名错误异常
             modelAndView.addObject("message", "没有该用户");
-            modelAndView.setViewName("error");
+            modelAndView.setViewName("../../login");
             return modelAndView;
         } else if (e instanceof IncorrectCredentialsException) {
             //用户名错误异常
             modelAndView.addObject("message", "密码错误");
-            modelAndView.setViewName("error");
+            modelAndView.setViewName("../../login");
             return modelAndView;
         } else {
             customException = new CustomException("未知错误");

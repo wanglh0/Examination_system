@@ -3,6 +3,7 @@ package com.system.controller;
 import com.system.po.Userlogin;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +23,18 @@ public class LoginController {
 
     //登录表单处理
     @RequestMapping(value = "/login", method = {RequestMethod.POST})
-    public String login(Userlogin userlogin) throws Exception {
+    public String login(Userlogin userlogin,String code) throws Exception {
 
         //Shiro实现登录
         UsernamePasswordToken token = new UsernamePasswordToken(userlogin.getUsername(),
                 userlogin.getPassword());
         Subject subject = SecurityUtils.getSubject();
+        Session session =subject.getSession();
+        String codesess = (String) session.getAttribute("codesess");
+        if(!code.equalsIgnoreCase(codesess)){
+            session.setAttribute("message","验证码错误");
+            return "../../login";
+        }
 
         //如果获取不到用户名就是登录失败，但登录失败的话，会直接抛出异常
         subject.login(token);

@@ -19,6 +19,7 @@ public class UserloginServiceImpl implements UserloginService {
     private UserloginMapper userloginMapper;
 
 
+    @Override
     public Userlogin findByName(String name) throws Exception {
         UserloginExample userloginExample = new UserloginExample();
 
@@ -27,7 +28,7 @@ public class UserloginServiceImpl implements UserloginService {
 
         List<Userlogin> list = userloginMapper.selectByExample(userloginExample);
 
-        return list.get(0);
+        return list.size()>0 ? list.get(0):null;
     }
 
     public void save(Userlogin userlogin) throws Exception {

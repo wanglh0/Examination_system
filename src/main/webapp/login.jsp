@@ -11,21 +11,24 @@
 	<script src="/js/bootstrap.min.js"></script>
 	<style type="text/css">
 	body{
-	   background: url(images/a.jpg)repeat;
+	   background-image: url(images/h.jpg);
+		background-size: cover;
+		/*background-position-x: center;*/
+		/*background-repeat: no-repeat;*/
 	}
 	#login-box {
 		/*border:1px solid #F00;*/
 		padding: 35px;
 		border-radius:15px;
-		background: #56666B;
-		color: #fff;
+		background: rgba(0,0,0,.25);
+		color: #080808;
 	}
 
 	</style>
 </head>
 <body>
 	<div class="container" id="top">
-		<div class="row" style="margin-top: 280px; ">
+		<div class="row" style="margin-top: 350px; ">
 			<div class="col-md-4"></div>
 			<div class="col-md-4" id="login-box">
 				<form class="form-horizontal" role="form" action="/login" id="from1" method="post">
@@ -41,6 +44,13 @@
 				      <input type="password" class="form-control" id="password" placeholder="请输入密码" name="password">
 				    </div>
 				  </div>
+					<div class="form-group">
+						<label for="lastname" class="col-sm-3 control-label">验证码</label>
+						<div class="col-sm-9">
+							<input type="text" class="col-sm-6" id="code" placeholder="请输入验证码" name="code"><img class="pull-right" src="/getcode">
+						</div>
+
+					</div>
 				  <%--<div class="form-group">--%>
 				    <%--<div class="col-sm-offset-2 col-sm-10">--%>
 				      <%--<div class="checkbox">--%>
@@ -56,9 +66,10 @@
 				      <%--</div>--%>
 				    <%--</div>--%>
 				  <%--</div>--%>
-				  <div class="form-group pull-right" style="margin-right: 15px;">
-				    <div class="col-sm-offset-2 col-sm-10">
-				      <button type="submit" class="btn btn-default btn-info">登录</button>
+				  <div class="form-group" style="margin-right: 15px;">
+				    <div class="col-sm-offset-3 col-sm-10">
+						<span  style="margin-left: 20px; color: red">${message}</span>
+				      <button type="submit" class="btn btn-default btn-info pull-right">登录</button>
 				    </div>
 				  </div>
 				</form>
