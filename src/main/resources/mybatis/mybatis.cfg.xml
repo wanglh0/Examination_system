@@ -7,7 +7,12 @@
 -->
 <configuration>
 
-
+    <settings>
+        <!-- 打印查询语句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+        <!--返回为map是让其返回空字段-->
+        <setting name="callSettersOnNulls" value="true"/>
+    </settings>
 
     <!-- 为JAVA PO类起类别名 -->
     <typeAliases>

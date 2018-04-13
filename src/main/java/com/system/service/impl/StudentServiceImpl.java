@@ -114,6 +114,9 @@ public class StudentServiceImpl implements StudentService {
 
         StudentCustom studentCustom = studentMapperCustom.findStudentAndSelectCourseListById(Integer.parseInt(name));
 
+        if(null == studentCustom){
+            return null;
+        }
         List<SelectedCourseCustom> list = studentCustom.getSelectedCourseList();
 
         // 判断该课程是否修完

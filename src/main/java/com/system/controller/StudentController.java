@@ -96,9 +96,12 @@ public class StudentController {
         Subject subject = SecurityUtils.getSubject();
         StudentCustom studentCustom = studentService.findStudentAndSelectCourseListByName((String) subject.getPrincipal());
 
-        List<SelectedCourseCustom> list = studentCustom.getSelectedCourseList();
+        if(null != studentCustom){
 
-        model.addAttribute("selectedCourseList", list);
+            List<SelectedCourseCustom> list = studentCustom.getSelectedCourseList();
+
+            model.addAttribute("selectedCourseList", list);
+        }
 
         return "student/selectCourse";
     }
@@ -111,9 +114,12 @@ public class StudentController {
         Subject subject = SecurityUtils.getSubject();
         StudentCustom studentCustom = studentService.findStudentAndSelectCourseListByName((String) subject.getPrincipal());
 
-        List<SelectedCourseCustom> list = studentCustom.getSelectedCourseList();
+        if(null != studentCustom){
 
-        model.addAttribute("selectedCourseList", list);
+            List<SelectedCourseCustom> list = studentCustom.getSelectedCourseList();
+
+            model.addAttribute("selectedCourseList", list);
+        }
 
         return "student/overCourse";
     }
