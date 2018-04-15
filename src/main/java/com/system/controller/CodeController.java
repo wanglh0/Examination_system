@@ -19,6 +19,9 @@ import java.util.Random;
  */
 @Controller
 public class CodeController {
+
+
+
     private int width = 90;//验证码宽度
     private int height = 30;//验证码高度
     private int codeCount = 4;//验证码个数
