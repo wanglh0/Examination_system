@@ -4,11 +4,13 @@ import com.system.exception.CustomException;
 import com.system.po.*;
 import com.system.service.*;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import sun.security.provider.MD5;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -84,10 +86,11 @@ public class AdminController {
             return "error";
         }
         //添加成功后，也添加到登录表
+        Md5Hash md5Hash = new Md5Hash("123",studentCustom.getUserid(),3);
         Userlogin userlogin = new Userlogin();
         userlogin.setUsername(studentCustom.getUserid().toString());
         userlogin.setRealname(studentCustom.getUsername());
-        userlogin.setPassword("123");
+        userlogin.setPassword(md5Hash.toString());
         userlogin.setRole(2);
         userloginService.save(userlogin);
 

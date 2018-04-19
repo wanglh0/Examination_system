@@ -11,6 +11,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +23,7 @@ import java.util.Set;
  * Created by Jacey on 2017/6/30.
  */
 
-@Component
+
 public class LoginRealm extends AuthorizingRealm{
 
     @Resource(name = "userloginServiceImpl")
@@ -38,13 +39,11 @@ public class LoginRealm extends AuthorizingRealm{
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
-        String username = (String) getAvailablePrincipal(principalCollection);
+        //获取当前登录用户
+        Userlogin userlogin = (Userlogin) principalCollection.getPrimaryPrincipal();
 
         Role role = null;
-
         try {
-            Userlogin userlogin = userloginService.findByName(username);
-            //获取角色对象
             role = roleService.findByid(userlogin.getRole());
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,8 +67,6 @@ public class LoginRealm extends AuthorizingRealm{
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         //用户名
         String username = (String) token.getPrincipal();
-        //密码
-        String password = new String((char[])token.getCredentials());
 
         Userlogin userlogin = null;
         try {
@@ -78,17 +75,13 @@ public class LoginRealm extends AuthorizingRealm{
             e.printStackTrace();
         }
 
-        if (userlogin == null) {
-            //没有该用户名
-            throw new UnknownAccountException();
-        } else if (!password.equals(userlogin.getPassword())) {
-            //密码错误
-            throw new IncorrectCredentialsException();
+        if(null==userlogin){
+            return null;
         }
 
         //身份验证通过,返回一个身份信息
-        AuthenticationInfo aInfo = new SimpleAuthenticationInfo(username,password,getName());
-        SecurityUtils.getSubject().getSession().setAttribute("user",userlogin);
+        AuthenticationInfo aInfo = new SimpleAuthenticationInfo(userlogin,userlogin.getPassword(), ByteSource.Util.bytes(userlogin.getUsername()), getName());
+
         return aInfo;
     }
 }
