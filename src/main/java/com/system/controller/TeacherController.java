@@ -38,9 +38,9 @@ public class TeacherController {
     public String stuCourseShow(Model model) throws Exception {
 
         Subject subject = SecurityUtils.getSubject();
-        String username = (String) subject.getPrincipal();
+        Userlogin userlogin = (Userlogin) subject.getPrincipal();
 
-        List<CourseCustom> list = courseService.findByTeacherID(Integer.parseInt(username));
+        List<CourseCustom> list = courseService.findByTeacherID(Integer.parseInt(userlogin.getUsername()));
         model.addAttribute("courseList", list);
 
         return "teacher/showCourse";

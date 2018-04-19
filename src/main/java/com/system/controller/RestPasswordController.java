@@ -3,6 +3,7 @@ package com.system.controller;
 import com.system.exception.CustomException;
 import com.system.po.Userlogin;
 import com.system.service.UserloginService;
+import com.system.util.Md5PwdUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -24,15 +25,16 @@ public class RestPasswordController {
     @RequestMapping(value = "/passwordRest", method = {RequestMethod.POST})
     public String passwordRest(String oldPassword, String password1) throws Exception {
         Subject subject = SecurityUtils.getSubject();
-        String username = (String) subject.getPrincipal();
+        Userlogin user = (Userlogin) subject.getPrincipal();
+        String oldPwd = Md5PwdUtil.getMd5Passwd(oldPassword,user.getUsername());
+        String newPwd = Md5PwdUtil.getMd5Passwd(password1, user.getUsername());
 
-        Userlogin userlogin = userloginService.findByName(username);
 
-        if (!oldPassword.equals(userlogin.getPassword())) {
+        if (!oldPwd.equals(user.getPassword())) {
             throw new CustomException("旧密码不正确");
         } else {
-            userlogin.setPassword(password1);
-            userloginService.updateByName(username, userlogin);
+            user.setPassword(newPwd);
+            userloginService.updateByName(user.getUsername(), user);
         }
 
         return "redirect:/logout";

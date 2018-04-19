@@ -3,10 +3,12 @@ package com.system.controller;
 import com.system.exception.CustomException;
 import com.system.po.*;
 import com.system.service.*;
+import com.system.util.Md5PwdUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +22,7 @@ import java.util.List;
  * Created by Jacey on 2017/6/30.
  */
 @Controller
+@Transactional
 @RequestMapping("/admin")
 public class AdminController {
 
@@ -86,11 +89,11 @@ public class AdminController {
             return "error";
         }
         //添加成功后，也添加到登录表
-        Md5Hash md5Hash = new Md5Hash("123",studentCustom.getUserid(),3);
         Userlogin userlogin = new Userlogin();
         userlogin.setUsername(studentCustom.getUserid().toString());
         userlogin.setRealname(studentCustom.getUsername());
-        userlogin.setPassword(md5Hash.toString());
+        String md5Passwd = Md5PwdUtil.getMd5Passwd("123", userlogin.getUsername());
+        userlogin.setPassword(md5Passwd);
         userlogin.setRole(2);
         userloginService.save(userlogin);
 
@@ -202,7 +205,8 @@ public class AdminController {
         Userlogin userlogin = new Userlogin();
         userlogin.setUsername(teacherCustom.getUserid().toString());
         userlogin.setRealname(teacherCustom.getUsername());
-        userlogin.setPassword("123");
+        String md5Passwd = Md5PwdUtil.getMd5Passwd("123", userlogin.getUsername());
+        userlogin.setPassword(md5Passwd);
         userlogin.setRole(1);
         userloginService.save(userlogin);
 
