@@ -58,6 +58,8 @@
                 /getcode=anon
 
                 /logout = logout
+                #接口
+                /mobile/**=anon
 
                 # 配置静态资源可以匿名访问
                 /css/** = anon
